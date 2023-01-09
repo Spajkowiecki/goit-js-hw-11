@@ -1,2 +1,9 @@
-@import './common';
-@import './example';
+@use './parts/header';
+@use './parts/gallery';
+@use './components/photo';
+@use './components/textfield';
+
+* {
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,52 @@
+header {
+  display: flex;
+  height: 5vh;
+  background: rgb(59, 59, 189);
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 10px;
+}
+
+.photo-card {
+  border: 1px solid #212121;
+}
+.photo-card img {
+  width: 460px;
+  height: 300px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+}
+.search-form input {
+  width: 400px;
+  border: none;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 5px 0px 0px 5px;
+  outline: none;
+}
+.search-form button {
+  border: none;
+  width: 60px;
+  border-radius: 0px 5px 5px 0px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}/*# sourceMappingURL=index.css.map */
