@@ -1,10 +1,9 @@
-import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-const axios = require('axios').default;
-const { log } = console;
-
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const axios = require('axios').default;
+const { log } = console;
 
 const url = 'https://pixabay.com/api/';
 const apiKey = '32705986-6617e254891a5833ed9977223';
@@ -14,19 +13,24 @@ const safeSearch = true;
 
 const form = document.querySelector('form');
 const input = document.querySelector('input');
-const button = document.querySelector('button');
 const gallery = document.querySelector('.gallery');
+const buttonUP = document.querySelector('.buttonUP');
+
+buttonUP.setAttribute('style', 'display: none');
 
 let page = 1;
 let images = 40;
 
-let totalHits;
+let totalHits = 0;
+var lightbox = new SimpleLightbox('.gallery a');
 
 const drawImage = image => {
   gallery.insertAdjacentHTML(
     'beforeend',
     `<div class="photo-card">
-  <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+    <a href=${image.largeImageURL}>
+      <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+    </a>
   <div class="info">
     <p class="info-item">
       <strong>LIKES</strong></br>
@@ -49,34 +53,65 @@ const drawImage = image => {
   );
 };
 
-const getData = async name => {
-  return await axios
-    .get(
-      `${url}?key=${apiKey}&fields=views,comments&q=${name}&image_type=${image_type}&orientation=${orientation}&safesearch=${safeSearch}&per_page=${images}&page=${page}`
-    )
-    .then(response => {
-      totalHits = response.data.totalHits;
-      return response.data.hits;
+const getData = async (name, pageNumber) => {
+  try {
+    const response = await axios.get(
+      `${url}?key=${apiKey}&fields=views,comments&q=${name}&image_type=${image_type}&orientation=${orientation}&safesearch=${safeSearch}&per_page=${images}&page=${pageNumber}`
+    );
+    const data = response.data.hits;
+    totalHits = response.data.totalHits;
+    lightbox.refresh();
+    Notify.success(`Hooray! We found ${totalHits} images.`);
+    data.forEach(image => {
+      drawImage(image);
     });
+  } catch (error) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  }
 };
 
 form.addEventListener('submit', async e => {
   e.preventDefault();
-  let data = input.value;
-  if (data !== '') {
-    const promise = await getData(data);
-    if (promise.length === 0) {
-      Notiflix.Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-    } else {
-      if (gallery.firstChild) {
-        gallery.innerHTML = '';
-      }
-      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-      promise.forEach(element => drawImage(element));
-    }
-  } else if (data === '') {
-    Notiflix.Notify.info('Input field is empty');
+
+  let data = input.value.trim();
+  if (data === '') {
+    Notify.failure('The field is empty, write something.');
+    return;
+  } else {
+    gallery.innerHTML = '';
+    page = 1;
+    getData(data, page);
+  }
+});
+
+function toggleUpButton() {
+  const headerHeight = document.querySelector('header').clientHeight;
+  buttonUP.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
+  if (window.scrollY >= headerHeight) {
+    log('GREATER!');
+    buttonUP.setAttribute('style', 'display: flex');
+  } else {
+    buttonUP.setAttribute('style', 'display: none');
+  }
+}
+
+window.addEventListener('scroll', () => {
+  log(window.scrollY);
+  toggleUpButton();
+
+  if (
+    window.scrollY + window.innerHeight >=
+    document.documentElement.scrollHeight
+  ) {
+    log('KONIEC STRONY!');
+    page++;
+    getData(input.value.trim(), page);
   }
 });

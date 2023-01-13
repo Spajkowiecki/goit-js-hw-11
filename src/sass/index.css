@@ -1,6 +1,5 @@
 header {
   display: flex;
-  height: 5vh;
   background: rgb(59, 59, 189);
   padding: 10px;
   justify-content: center;
@@ -10,22 +9,32 @@ header {
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
+}
+
+main {
   padding: 10px;
-  gap: 10px;
 }
 
 .photo-card {
-  border: 1px solid #212121;
+  height: 280px;
+  flex: 1 0 21%;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+.photo-card:hover {
+  box-shadow: 1px 1px 5px rgba(255, 0, 0, 0.7);
 }
 .photo-card img {
-  width: 460px;
-  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 80%;
 }
 
 .info {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -46,7 +55,25 @@ header {
   border-radius: 0px 5px 5px 0px;
 }
 
+.buttonUP {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  background: white;
+  border: none;
+  fill: red;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.buttonUP:hover {
+  fill: black;
+  box-shadow: 1px 1px 5px black;
+}
+
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }/*# sourceMappingURL=index.css.map */

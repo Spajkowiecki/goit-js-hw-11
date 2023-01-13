@@ -1,0 +1,16 @@
+.buttonUP {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  background: white;
+  border: none;
+  fill: red;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgba(#000, 0.5);
+  cursor: pointer;
+  &:hover {
+    fill: black;
+    box-shadow: 1px 1px 5px rgba(#000, 1);
+  }
+}
