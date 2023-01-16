@@ -3,7 +3,7 @@
   input {
     width: 400px;
     border: none;
-    height: 40px;
+    padding: 10px;
     padding-left: 10px;
     border-radius: 5px 0px 0px 5px;
     outline: none;
@@ -12,5 +12,20 @@
     border: none;
     width: 60px;
     border-radius: 0px 5px 5px 0px;
+  }
+}
+
+.autoscroll {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  input {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
   }
 }

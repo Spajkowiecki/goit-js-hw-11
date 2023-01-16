@@ -1,0 +1,26 @@
+.buttonMore {
+  background: rgb(80, 80, 223);
+  color: white;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: 900;
+  border: 3px solid rgb(59, 59, 189);
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    border: 3px solid rgb(189, 59, 59);
+    background: rgb(223, 80, 80);
+  }
+  &:active {
+    border: 3px solid rgb(59, 189, 68);
+    background: rgb(82, 223, 80);
+  }
+}
+
+.disabled {
+  display: none;
+}
+
+.enabled {
+  display: flex;
+}

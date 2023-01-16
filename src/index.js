@@ -15,6 +15,8 @@ const form = document.querySelector('form');
 const input = document.querySelector('input');
 const gallery = document.querySelector('.gallery');
 const buttonUP = document.querySelector('.buttonUP');
+const buttonMore = document.querySelector('.buttonMore');
+const checkbox = document.querySelector('input[name=autoscroll]');
 
 buttonUP.setAttribute('style', 'display: none');
 
@@ -23,6 +25,10 @@ let images = 40;
 
 let totalHits = 0;
 var lightbox = new SimpleLightbox('.gallery a');
+
+window.onload = () => {
+  buttonMore.classList.add('disabled');
+};
 
 const drawImage = image => {
   gallery.insertAdjacentHTML(
@@ -53,6 +59,8 @@ const drawImage = image => {
   );
 };
 
+checkbox.addEventListener('change', () => {});
+
 const getData = async (name, pageNumber) => {
   try {
     const response = await axios.get(
@@ -61,7 +69,9 @@ const getData = async (name, pageNumber) => {
     const data = response.data.hits;
     totalHits = response.data.totalHits;
     lightbox.refresh();
-    Notify.success(`Hooray! We found ${totalHits} images.`);
+    if (page <= 1) {
+      Notify.success(`Hooray! We found ${totalHits} images.`);
+    }
     data.forEach(image => {
       drawImage(image);
     });
@@ -105,13 +115,26 @@ function toggleUpButton() {
 window.addEventListener('scroll', () => {
   log(window.scrollY);
   toggleUpButton();
-
   if (
     window.scrollY + window.innerHeight >=
     document.documentElement.scrollHeight
   ) {
-    log('KONIEC STRONY!');
-    page++;
-    getData(input.value.trim(), page);
+    totalHits -= page * images;
+    if (totalHits <= 0) {
+      Notify.failure('There are no images left');
+    } else {
+      if (checkbox.checked) {
+        page++;
+        getData(input.value.trim(), page);
+        Notify.success(`Images left ${totalHits}.`);
+      } else {
+        buttonMore.classList.replace('disabled', 'enabled');
+        buttonMore.addEventListener('click', () => {
+          page++;
+          getData(input.value.trim(), page);
+          Notify.success(`Images left ${totalHits}.`);
+        });
+      }
+    }
   }
 });
