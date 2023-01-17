@@ -19,16 +19,13 @@ const buttonMore = document.querySelector('.buttonMore');
 const checkbox = document.querySelector('input[name=autoscroll]');
 
 buttonUP.setAttribute('style', 'display: none');
+buttonMore.setAttribute('style', 'display: none');
 
 let page = 1;
 let images = 40;
 
 let totalHits = 0;
 var lightbox = new SimpleLightbox('.gallery a');
-
-window.onload = () => {
-  buttonMore.classList.add('disabled');
-};
 
 const drawImage = image => {
   gallery.insertAdjacentHTML(
@@ -59,7 +56,13 @@ const drawImage = image => {
   );
 };
 
-checkbox.addEventListener('change', () => {});
+checkbox.addEventListener('change', () => {
+  if (checkbox.checked) {
+    buttonMore.setAttribute('style', 'display:none');
+  } else {
+    buttonMore.setAttribute('style', 'display:flex');
+  }
+});
 
 const getData = async (name, pageNumber) => {
   try {
@@ -105,12 +108,18 @@ function toggleUpButton() {
     });
   });
   if (window.scrollY >= headerHeight) {
-    log('GREATER!');
     buttonUP.setAttribute('style', 'display: flex');
   } else {
     buttonUP.setAttribute('style', 'display: none');
   }
 }
+
+buttonMore.addEventListener('click', () => {
+  page++;
+  getData(input.value.trim(), page);
+  Notify.success(`Images left ${totalHits}.`);
+  buttonMore.classList.replace('enabled', 'disabled');
+});
 
 window.addEventListener('scroll', () => {
   log(window.scrollY);
@@ -128,12 +137,7 @@ window.addEventListener('scroll', () => {
         getData(input.value.trim(), page);
         Notify.success(`Images left ${totalHits}.`);
       } else {
-        buttonMore.classList.replace('disabled', 'enabled');
-        buttonMore.addEventListener('click', () => {
-          page++;
-          getData(input.value.trim(), page);
-          Notify.success(`Images left ${totalHits}.`);
-        });
+        buttonMore.setAttribute('style', 'display: flex');
       }
     }
   }
