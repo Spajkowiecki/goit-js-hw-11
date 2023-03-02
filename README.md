@@ -1,6 +1,7 @@
 # KURS FULLSTACK GOIT
 ETAP KURSU W KTÓRYM UCZYMY SIĘ JĘZYKA: JAVASCRIPT
 ## Zadanie 11
+https://spajkowiecki.github.io/goit-js-hw-11/
 1. wyszukiwanie obrazów: frontend aplikacji wyszukiwania i przeglądania obrazków według słów kluczowych. Popraw wizualnie elementy interfejsu. Obejrzyj wersję demonstracyjną wideo o działaniu aplikacji.
 Zakres zadania:
 - Formularz wyszukiwania
