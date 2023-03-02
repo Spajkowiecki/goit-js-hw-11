@@ -1,3 +1,5 @@
 # KURS FULLSTACK GOIT
 ETAP KURSU W KTÓRYM UCZYMY SIĘ JĘZYKA: JAVASCRIPT
 ## Zadanie 11
+1. wyszukiwanie obrazów
+### ss
